@@ -17,8 +17,8 @@ public class TituloPropiedad {
     private int hipotecaBase;
     private int precioEdificar;
     private boolean hipotecada;
-    private int numHoteles;
-    private int numCasas;
+    private int numHoteles=0;
+    private int numCasas=0;
     
     
     public TituloPropiedad(String nombre,int precioC,int alquilerB,float factorR,int hipotecaB,int precioE)
@@ -43,44 +43,116 @@ public class TituloPropiedad {
                 + ", numHoteles=" + numHoteles + ", numCasas=" + numCasas + '}';
     }
 
-    public void setHipotecada(boolean hipotecada) {
+    void setHipotecada(boolean hipotecada) {
         this.hipotecada = hipotecada;
     }
 
-    public String getNombre() {
+    String getNombre() {
         return Nombre;
     }
 
-    public boolean isHipotecada() {
+    boolean getHipotecada() {
         return hipotecada;
     }
 
-    public int getPrecioCompra() {
+    int getPrecioCompra() {
         return precioCompra;
     }
 
-    public int getAlquilerBase() {
+    int getAlquilerBase() {
         return alquilerBase;
     }
 
-    public float getFactorRevalorizacion() {
+    float getFactorRevalorizacion() {
         return factorRevalorizacion;
     }
 
-    public int getHipotecaBase() {
+    int getHipotecaBase() {
         return hipotecaBase;
     }
 
-    public int getPrecioEdificar() {
+    int getPrecioEdificar() {
         return precioEdificar;
     }
 
-    public int getNumHoteles() {
+    int getNumHoteles() {
         return numHoteles;
     }
 
-    public int getNumCasas() {
+   int getNumCasas() {
         return numCasas;
     }
     
+    int calcularCosteCancelar(){
+
+
+    }
+    int calcularCosteHipotecar(){
+    
+    
+    
+    }
+    int calcularImporteAlquiler(){
+    
+    
+    }
+    int calcularPrecioVenta(){
+    
+    
+    
+    }
+    void cancelarHipoteca(){
+    
+    
+    
+    }
+    void cobrarAlquiler(int coste){
+    
+    
+    
+    }
+    void edificarCasa(){
+    
+    
+    
+    }
+    void edificarHotel(){
+    
+    
+    
+    }
+
+    int hipotecar(){
+    
+    
+    
+    }
+    int pagarAlquiler(){
+    
+    
+    
+    }
+    boolean propietarioEncarcelado(){
+    
+    
+    
+    }
+    
+    void setPropietario(Jugador propietario){
+    
+    
+    
+    }
+    boolean tengoPropietario(){
+    
+    
+    
+    }
+
+
+
+
+
+
+
 }

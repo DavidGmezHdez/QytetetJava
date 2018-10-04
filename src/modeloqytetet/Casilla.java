@@ -1,17 +1,13 @@
 package modeloqytetet;
 public class Casilla {
 
-    private int numeroCasilla;
-    private int precioCompra;
+    private int numCasilla=0;
+    private int Coste;
     private TipoCasilla tipo;
     private TituloPropiedad titulo;
     
     public void setNumeroCasilla(int numeroCasilla) {
-        this.numeroCasilla = numeroCasilla;
-    }
-
-    public void setPrecioCompra(int precioCompra) {
-        this.precioCompra = precioCompra;
+        this.numCasilla = numeroCasilla;
     }
 
     public void setTipo(TipoCasilla tipo) {
@@ -34,41 +30,69 @@ public class Casilla {
                 + precioCompra + ", tipo=" + tipo +'}';
     }
 
-    public int getNumeroCasilla() {
-        return numeroCasilla;
+    int getNumeroCasilla() {
+        return numCasilla;
     }
 
-    public int getPrecioCompra() {
-        return precioCompra;
+    int getCoste() {
+        return Coste;
     }
 
-    public TipoCasilla getTipo() {
+    TipoCasilla getTipo() {
         return tipo;
     }
 
-    public TituloPropiedad getTitulo() {
+    TituloPropiedad getTitulo() {
         return titulo;
     }
 
     public Casilla(TipoCasilla tipo, int numeroCasilla) {
-        this.numeroCasilla = numeroCasilla;
+        this.numCasilla = numeroCasilla;
         
         if(tipo!=TipoCasilla.CALLE)
         {
             setTitulo(titulo);
-            precioCompra=0;
+            Coste=0;
         }
     }
     
     public Casilla(TipoCasilla tipo,int numeroCasilla , TituloPropiedad titulo) {
-        this.numeroCasilla = numeroCasilla;
+        this.numCasilla = numeroCasilla;
         if(tipo == TipoCasilla.CALLE){
             setTitulo(titulo);
             this.tipo = tipo;
-            precioCompra = titulo.getPrecioCompra();
+            Coste = titulo.getPrecioCompra();
         }
     }
 
+    TituloPropiedad signarPropietario(Jugador jugador){
+    
+    
+    }
+
+    int pagarAlquiler(){
+    
+    
+    
+    }
+    boolean propietarioEncarcelado(){
+    
+    
+    
+    }
+    boolean soyEdificable(){
+    
+    
+    
+    }
+    boolean tengoPropietario(){
+    
+    
+    }
+    
+    
+    
+    
     
     
 }

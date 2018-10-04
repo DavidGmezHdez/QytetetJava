@@ -16,11 +16,11 @@ public class Tablero {
     public String toString() {
         return "Tablero{" + "casillas=" + casillas + ", carcel=" + carcel + '}';
     }
-    public ArrayList<Casilla> getCasillas() {
-        return casillas;
+    ArrayList<Casilla> getCasillas() {
+        return casillas[NUM_CASILLAS];
     }
 
-    public Casilla getCarcel() {
+    Casilla getCarcel() {
         return carcel;
     }
     
@@ -68,6 +68,24 @@ public class Tablero {
     
     
     }
+    
+    boolean esCasillaCarcel(int numeroCasilla){
+    
+    
+    
+    }
+
+    Casilla obtenerCasillaFinal(Casilla casilla, int desplazamiento){
+    
+    
+    }
+    
+    Casilla obtenerCasillaNumero(int numeroCasilla = casillaFinal){
+    
+    
+    
+    }
+    
     
     
 }
