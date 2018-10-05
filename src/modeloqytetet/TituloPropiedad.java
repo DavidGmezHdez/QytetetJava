@@ -19,6 +19,7 @@ public class TituloPropiedad {
     private boolean hipotecada;
     private int numHoteles=0;
     private int numCasas=0;
+    private Jugador propietario;
     
     
     public TituloPropiedad(String nombre,int precioC,int alquilerB,float factorR,int hipotecaB,int precioE)
@@ -140,7 +141,7 @@ public class TituloPropiedad {
     
     void setPropietario(Jugador propietario){
     
-    
+        this.propietario=propietario;
     
     }
     boolean tengoPropietario(){
@@ -149,6 +150,9 @@ public class TituloPropiedad {
     
     }
 
+    Jugador getPropietario(){
+       return propietario;
+    }
 
 
 

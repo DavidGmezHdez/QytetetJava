@@ -9,6 +9,12 @@ public class Qytetet {
     private static int NUM_CASILLAS = 20;
     static int PRECIO_LIBERTAD = 200;
     static int SALDO_SALIDA = 1000;
+    private Sorpresa cartaActual;
+    private Jugador jugadorActual;
+    private static ArrayList<Jugador>jugadores=new ArrayList<>();
+    
+    
+    
     
     public Tablero getTablero() {
         return tablero;
@@ -139,27 +145,25 @@ private void encarcelarJugador(){
 
 public Sorpresa getCartaActual(){
 
-    return tablero.getCasillas().Sorpresa;
+    return cartaActual;
 
 }
 
 
 Dado getDado(){
 
-
+    return Dado.getDado();
 
 }
 
 Jugador getJugadorActual(){
 
-
+    return jugadorActual;
 
 }
 
-JUgador getJugadores() : {
-Jugador [2..MAX_JUGADORES];
-
-
+ArrayList<Jugador> getJugadores(){
+        return jugadores;   
 }
 
 Sorpresa getMazo(){
@@ -180,16 +184,19 @@ public void hipotecarPropiedad(int numeroCasilla){
 }
 
 
-public void inicializarJuego(string nombres[2..MAX_JUGADORES]){
+public void inicializarJuego(ArrayList<String> nombres){
 
-  throw new UnsupportedOperationException("Sin implementar");
-
+    inicializarTablero();
+    inicializarCartasSorpresa();
+    inicializarJugadores(nombres);
 
 }
 
-private void inicializarJugadores(string nombres[2..MAX_JUGADORES]){
-
-    throw new UnsupportedOperationException("Sin implementar");
+private void inicializarJugadores(ArrayList<String> nombres){
+    Jugador jugador = null;
+    for (int i=2;i<MAX_JUGADORES;i++)
+    jugador=new Jugador(nombres.get(i));
+    jugadores.add(jugador);
 
 }
 
@@ -226,14 +233,14 @@ public Casilla obtenerCasillasTablero(){
 
             }
 
-public obtenerPropiedadesJugador() {
+public int obtenerPropiedadesJugador() {
     
     int[0..*];
     
 }
 
 
-public obtenerPropiedadesJugadorSegunEstadoHipoteca(boolean estadoHipoteca){
+public int obtenerPropiedadesJugadorSegunEstadoHipoteca(boolean estadoHipoteca){
     
     int[0..*]
 
@@ -258,7 +265,7 @@ private void salidaJugadores(){
 }
 private void setCartaActual(Sorpresa cartaActual){
 
-    throw new UnsupportedOperationException("Sin implementar");
+    this.cartaActual=cartaActual;
 
 }
 public void siguienteJugador(){

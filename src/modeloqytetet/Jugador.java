@@ -1,11 +1,22 @@
 
 package modeloqytetet;
+import java.util.ArrayList;
 
 public class Jugador {
+
 private boolean encarcelado = false;
 private String nombre;
 private int saldo= 7500;
+private Sorpresa cartaLibertad;
+private Casilla casillaActual;
+private static ArrayList<TituloPropiedad>propiedades;
         
+
+
+    public Jugador(String nombre) {
+        this.nombre = nombre;
+    }
+
         
 boolean cancelarHipoteca(TituloPropiedad titulo){
 
@@ -61,26 +72,26 @@ boolean estoyEnCalleLibre(){
 }
 Sopresa getCartaLibertad(){
 
-
+    return cartaLibertad;  
 
 }
-Casilla 2..MAX_JUGADORES getCasillaActual(){
+Casilla getCasillaActual(){
 
-
+    return casillaActual;
 
 }
 boolean getEncarcelado(){
 
-
+    return encarcelado;
 
 }
 String getNombre(){
 
-
+    return nombre;
 
 }
-TituloPropiedad getPropiedades(){
-    TituloPropiedad[0..*]
+ArrayList<TituloPropiedad> getPropiedades(){
+    return propiedades;
             
             }            
 public int getSaldo(){
@@ -130,17 +141,23 @@ void pagarLibertad(int cantidad){
 }
 void setCartaLibertad(Sorpresa carta){
 
-
+    if (carta.getSorpresa()==TipoSorpresa.SALIRCARCEL)
+           cartaLibertad=carta;
+    else
+        System.out.println("Error:Carta no es de tipo SALIRCARCEL");    
 
 }
 void setCasillaActual(Casilla casilla){
 
-
+    casillaActual=casilla;
 
 }
-void setEncarcelado(boolean encarcelado=false){
+void setEncarcelado(boolean encarcelado){
 
-
+   if(encarcelado)
+       this.encarcelado=encarcelado;
+   else
+       this.encarcelado=false;
 
 }
 boolean tengoCartaLibertad(){
@@ -160,5 +177,11 @@ boolean venderPropiedad(Casilla casilla){
 
 
 }    
+    @Override
+    public String toString() {
+        return "Jugador{" + "encarcelado=" + encarcelado 
+                + ", nombre=" + nombre + ", saldo=" + saldo + ", cartaLibertad=" + cartaLibertad 
+                + ", casillaActual=" + casillaActual + '}';
+    }
     
 }
