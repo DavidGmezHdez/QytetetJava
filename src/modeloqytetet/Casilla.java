@@ -22,12 +22,12 @@ public class Casilla {
     public String toString() {
         
         if (tipo == TipoCasilla.CALLE)
-        return "Casilla{" + "numeroCasilla=" + numeroCasilla + ", precioCompra=" 
-                + precioCompra + ", tipo=" + tipo + ", titulo=" 
+        return "Casilla{" + "numeroCasilla=" + Coste + ", precioCompra=" 
+                + Coste + ", tipo=" + tipo + ", titulo=" 
                 + titulo + '}';
         else
-            return "Casilla{" + "numeroCasilla=" + numeroCasilla + ", precioCompra=" 
-                + precioCompra + ", tipo=" + tipo +'}';
+            return "Casilla{" + "numeroCasilla=" + Coste + ", precioCompra=" 
+                + Coste + ", tipo=" + tipo +'}';
     }
 
     int getNumeroCasilla() {
@@ -64,7 +64,7 @@ public class Casilla {
             Coste = titulo.getPrecioCompra();
         }
     }
-
+/*
     TituloPropiedad signarPropietario(Jugador jugador){
     
     
@@ -90,7 +90,7 @@ public class Casilla {
     
     }
     
-    
+*/    
     
     
     

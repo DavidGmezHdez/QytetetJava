@@ -17,7 +17,7 @@ public class Tablero {
         return "Tablero{" + "casillas=" + casillas + ", carcel=" + carcel + '}';
     }
     ArrayList<Casilla> getCasillas() {
-        return casillas[NUM_CASILLAS];
+        return casillas;
     }
 
     Casilla getCarcel() {
@@ -68,11 +68,13 @@ public class Tablero {
     
     
     }
-    
+    /*
     boolean esCasillaCarcel(int numeroCasilla){
+    boolean resultado=false;
+    if (casillas[numeroCasilla].getTipo == carcel)
+          resultado=true;
     
-    
-    
+    return resultado;
     }
 
     Casilla obtenerCasillaFinal(Casilla casilla, int desplazamiento){
@@ -85,7 +87,7 @@ public class Tablero {
     
     
     }
-    
+*/
     
     
 }

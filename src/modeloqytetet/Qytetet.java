@@ -55,7 +55,7 @@ public class Qytetet {
         return mazo;   
     }
     
-    private static void inicializarCartasSorpresa(){
+    public static void inicializarCartasSorpresa(){
             inicializarTablero();
             mazo.add(new Sorpresa ("Te hemos pillado con las manos en los sobres, lo sentimos, ¡debes ir a la carcel!", 
                     tablero.getCarcel().getNumeroCasilla(), TipoSorpresa.IRACASILLA));
@@ -109,7 +109,7 @@ public void aplicarSorpresa(){
 
 }
 
-
+/*
 public boolean cancelarHipoteca(int numeroCasilla){
 
     
@@ -135,6 +135,8 @@ public boolean edificarHotel(int numeroCasilla){
 
 
 }
+
+*/
 
 private void encarcelarJugador(){
 
@@ -165,7 +167,7 @@ Jugador getJugadorActual(){
 ArrayList<Jugador> getJugadores(){
         return jugadores;   
 }
-
+/*
 Sorpresa getMazo(){
     Sorpresa[0..*]
             
@@ -176,7 +178,7 @@ public int getValorDado(){
 
 
 }
-
+*/
 public void hipotecarPropiedad(int numeroCasilla){
 
     throw new UnsupportedOperationException("Sin implementar");
@@ -201,13 +203,13 @@ private void inicializarJugadores(ArrayList<String> nombres){
 }
 
 
-
+/*
 public boolean intentarSalirCarcel(MetodoSalirCarcel metodo){
 
 
 
 }
-
+*/
 
 public void jugar(){
 
@@ -220,6 +222,7 @@ void mover(int numCasillaDestino){
     throw new UnsupportedOperationException("Sin implementar");
 
 }
+/*
 
 public Casilla obtenerCasillaJugadorActual(){
 
@@ -245,7 +248,7 @@ public int obtenerPropiedadesJugadorSegunEstadoHipoteca(boolean estadoHipoteca){
     int[0..*]
 
 }
-
+*/
 
 public void obtenerRanking(){
 
@@ -253,11 +256,13 @@ public void obtenerRanking(){
 
 }
 
-
+/*
 public int obtenerSaldoJugadorActual(){
 
 
 }
+*/
+
 private void salidaJugadores(){
 
         throw new UnsupportedOperationException("Sin implementar");
@@ -273,6 +278,7 @@ public void siguienteJugador(){
     throw new UnsupportedOperationException("Sin implementar");
 
 }
+/*
 int tirarDado(){
 
 
@@ -282,5 +288,5 @@ public boolean venderPropiedad(int numeroCasilla){
 
 
 }
-
+*/
 }

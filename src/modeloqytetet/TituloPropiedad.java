@@ -83,7 +83,7 @@ public class TituloPropiedad {
    int getNumCasas() {
         return numCasas;
     }
-    
+ /*   
     int calcularCosteCancelar(){
 
 
@@ -102,27 +102,29 @@ public class TituloPropiedad {
     
     
     }
+    
+    */
     void cancelarHipoteca(){
     
-    
+    throw new UnsupportedOperationException("Sin implementar");
     
     }
     void cobrarAlquiler(int coste){
     
-    
+    throw new UnsupportedOperationException("Sin implementar");
     
     }
     void edificarCasa(){
     
-    
+    throw new UnsupportedOperationException("Sin implementar");
     
     }
     void edificarHotel(){
     
-    
+    throw new UnsupportedOperationException("Sin implementar");
     
     }
-
+/*
     int hipotecar(){
     
     
@@ -138,25 +140,23 @@ public class TituloPropiedad {
     
     
     }
-    
+*/    
     void setPropietario(Jugador propietario){
     
         this.propietario=propietario;
     
     }
+    
+/*    
     boolean tengoPropietario(){
     
     
     
     }
-
+*/
     Jugador getPropietario(){
        return propietario;
     }
-
-
-
-
 
 
 }

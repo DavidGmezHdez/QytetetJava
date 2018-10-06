@@ -1,5 +1,6 @@
 
 package modeloqytetet;
+import java.util.Random;
 public class Dado {
 
     private int valor;
@@ -11,7 +12,9 @@ public class Dado {
     
     int tirar(){
     
-    
+        Random r = new Random();
+        int valorDado = r.nextInt(6)+1;
+        return valorDado;
     }
 public int getValor(){
 

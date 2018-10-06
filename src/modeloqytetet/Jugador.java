@@ -17,7 +17,7 @@ private static ArrayList<TituloPropiedad>propiedades;
         this.nombre = nombre;
     }
 
-        
+/*        
 boolean cancelarHipoteca(TituloPropiedad titulo){
 
 
@@ -54,11 +54,15 @@ boolean edificarHotel(TituloPropiedad titulo){
 
 
 }
+*/
 void eliminarDeMisPropiedades(TituloPropiedad titulo){
 
-
+    throw new UnsupportedOperationException("Sin implementar");
 
 }
+
+
+/*
 private boolean esDeMiPropiedad(TituloPropiedad titulo){
 
 
@@ -70,7 +74,9 @@ boolean estoyEnCalleLibre(){
 
 
 }
-Sopresa getCartaLibertad(){
+
+*/
+Sorpresa getCartaLibertad(){
 
     return cartaLibertad;  
 
@@ -100,16 +106,19 @@ public int getSaldo(){
 
 }
 
+/*
 boolean hipotecarPropiedad(TituloPropiedad titulo){
 
 
 
 }
+*/
 void irACarcel(Casilla casilla){
 
-
+throw new UnsupportedOperationException("Sin implementar");
 
 }
+/*
 int modificarSaldo(int cantidad){
 
 
@@ -123,20 +132,23 @@ int obtenerCapital(){
 TituloPropiedad obtenerPropiedades(boolean hipotecada){
      TituloPropiedad[0..*]
              
-             }             
+}
+*/
+
+
 void pagarAlquiler(){
 
-
+throw new UnsupportedOperationException("Sin implementar");
 
 }
 void pagarImpuesto(){
 
-
+throw new UnsupportedOperationException("Sin implementar");
 
 }
 void pagarLibertad(int cantidad){
 
-
+throw new UnsupportedOperationException("Sin implementar");
 
 }
 void setCartaLibertad(Sorpresa carta){
@@ -160,23 +172,32 @@ void setEncarcelado(boolean encarcelado){
        this.encarcelado=false;
 
 }
+
+/*
 boolean tengoCartaLibertad(){
 
 
 
 }
+*/
+
 boolean tengoSaldo(int cantidad){
 boolean tengo=false;
 if (cantidad>0)
+        {
         tengo=true;
-
+        }
 return tengo;
 }
+
+/*
 boolean venderPropiedad(Casilla casilla){
 
 
 
-}    
+} 
+
+*/
     @Override
     public String toString() {
         return "Jugador{" + "encarcelado=" + encarcelado 
