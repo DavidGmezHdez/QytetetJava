@@ -47,23 +47,21 @@ public class PruebaQytetet {
     }
     private static ArrayList<String> getNombreJugadores()
     {
-        ArrayList <String> nombres=new ArrayList<>();
+        ArrayList <String> nombres= new ArrayList<>();
+        System.out.println("Introduce el numero de jugadores");
+        int num_jugadores;
         
-        int MAX_JUGADORES = in.nextInt();
-        for (int i=0;i<MAX_JUGADORES;i++)
+        num_jugadores = in.nextInt();
+        for (int i=0;i<num_jugadores;i++)
         { 
-            String s = in.nextLine();
+            System.out.println("Introduce el nombre de los jugadores");
+            String s = in.next();
             nombres.add(s);
         }
     
-    return nombres;
-    
-    
+    return nombres;  
     }
-    
-    
-    
-    
+
     public static void main(String[] args) {
        Qytetet.inicializarCartasSorpresa();
        Tablero tablero=new Tablero();

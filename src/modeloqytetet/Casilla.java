@@ -22,11 +22,11 @@ public class Casilla {
     public String toString() {
         
         if (tipo == TipoCasilla.CALLE)
-        return "Casilla{" + "numeroCasilla=" + Coste + ", precioCompra=" 
+        return "Casilla{" + "numeroCasilla=" + numCasilla + ", precioCompra=" 
                 + Coste + ", tipo=" + tipo + ", titulo=" 
                 + titulo + '}';
         else
-            return "Casilla{" + "numeroCasilla=" + Coste + ", precioCompra=" 
+            return "Casilla{" + "numeroCasilla=" + numCasilla + ", precioCompra=" 
                 + Coste + ", tipo=" + tipo +'}';
     }
 
@@ -47,17 +47,18 @@ public class Casilla {
     }
 
     public Casilla(TipoCasilla tipo, int numeroCasilla) {
-        this.numCasilla = numeroCasilla;
+        setNumeroCasilla(numeroCasilla);
         
         if(tipo!=TipoCasilla.CALLE)
         {
+            setTipo(tipo);
             setTitulo(titulo);
             Coste=0;
         }
     }
     
     public Casilla(TipoCasilla tipo,int numeroCasilla , TituloPropiedad titulo) {
-        this.numCasilla = numeroCasilla;
+        setNumeroCasilla(numeroCasilla);
         if(tipo == TipoCasilla.CALLE){
             setTitulo(titulo);
             this.tipo = tipo;
