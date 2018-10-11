@@ -186,7 +186,7 @@ public void hipotecarPropiedad(int numeroCasilla){
 }
 
 
-public static void inicializarJuego(ArrayList<String> nombres){
+public void inicializarJuego(ArrayList<String> nombres){
 
     inicializarTablero();
     inicializarCartasSorpresa();
@@ -194,11 +194,10 @@ public static void inicializarJuego(ArrayList<String> nombres){
 
 }
 
-private static void inicializarJugadores(ArrayList<String> nombres){
-    Jugador jugador = null;
+private void inicializarJugadores(ArrayList<String> nombres){
+    int num_jugadores=nombres.size();
     for (int i=0;i<nombres.size();i++)
-    jugador=new Jugador(nombres.get(i));
-    jugadores.add(jugador);
+      this.jugadores.add(new Jugador(nombres.get(i)));
 
 }
 
