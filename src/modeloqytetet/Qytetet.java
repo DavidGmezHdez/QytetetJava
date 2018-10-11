@@ -55,7 +55,7 @@ public class Qytetet {
         return mazo;   
     }
     
-    public static void inicializarCartasSorpresa(){
+    private static void inicializarCartasSorpresa(){
             inicializarTablero();
             mazo.add(new Sorpresa ("Te hemos pillado con las manos en los sobres, lo sentimos, ¡debes ir a la carcel!", 
                     tablero.getCarcel().getNumeroCasilla(), TipoSorpresa.IRACASILLA));
@@ -186,7 +186,7 @@ public void hipotecarPropiedad(int numeroCasilla){
 }
 
 
-public void inicializarJuego(ArrayList<String> nombres){
+public static void inicializarJuego(ArrayList<String> nombres){
 
     inicializarTablero();
     inicializarCartasSorpresa();
@@ -194,9 +194,9 @@ public void inicializarJuego(ArrayList<String> nombres){
 
 }
 
-private void inicializarJugadores(ArrayList<String> nombres){
+private static void inicializarJugadores(ArrayList<String> nombres){
     Jugador jugador = null;
-    for (int i=2;i<MAX_JUGADORES;i++)
+    for (int i=0;i<nombres.size();i++)
     jugador=new Jugador(nombres.get(i));
     jugadores.add(jugador);
 
