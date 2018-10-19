@@ -3,8 +3,9 @@ package modeloqytetet;
 import java.util.ArrayList;
 
 public class Tablero {
-    private ArrayList<Casilla> casillas;
+    private ArrayList<Casilla> casillas = new ArrayList<>();;
     private Casilla carcel;
+    
     
     
     public Tablero() 
@@ -26,7 +27,6 @@ public class Tablero {
     
     private void inicializar()
     {
-        casillas=new ArrayList<>();
         ArrayList<TituloPropiedad> titulos = new ArrayList<>();
         int contador=0;
         // Creamos primeros todos los titulos de propiedad para las casillas de tipo CALLE
@@ -68,26 +68,27 @@ public class Tablero {
     
     
     }
-    /*
-    boolean esCasillaCarcel(int numeroCasilla){
-    boolean resultado=false;
-    if (casillas[numeroCasilla].getTipo == carcel)
-          resultado=true;
     
-    return resultado;
+    boolean esCasillaCarcel(int numeroCasilla){
+        return carcel.getNumeroCasilla()==numeroCasilla;
     }
 
     Casilla obtenerCasillaFinal(Casilla casilla, int desplazamiento){
-    
+        int suma=desplazamiento + casilla.getNumeroCasilla();
+        if (suma>20){
+            suma=suma%20;
+        }
+        
+        return casillas.get(suma);
     
     }
     
-    Casilla obtenerCasillaNumero(int numeroCasilla = casillaFinal){
+    Casilla obtenerCasillaNumero(int numeroCasilla){
     
-    
+        return casillas.get(numeroCasilla);
     
     }
-*/
+
     
     
 }

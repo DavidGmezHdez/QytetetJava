@@ -12,6 +12,7 @@ public class Qytetet {
     private Sorpresa cartaActual;
     private Jugador jugadorActual;
     private static ArrayList<Jugador>jugadores=new ArrayList<>();
+    private EstadoJuego estado;
     
     
     
@@ -221,7 +222,7 @@ void mover(int numCasillaDestino){
     throw new UnsupportedOperationException("Sin implementar");
 
 }
-/*
+
 
 public Casilla obtenerCasillaJugadorActual(){
 
@@ -242,12 +243,14 @@ public int obtenerPropiedadesJugador() {
 }
 
 
-public int obtenerPropiedadesJugadorSegunEstadoHipoteca(boolean estadoHipoteca){
+public ArrayList <int[]> obtenerPropiedadesJugadorSegunEstadoHipoteca(boolean estadoHipoteca){
+    ArrayList<int[]>propieades=new ArrayList<>();
     
-    int[0..*]
+    propiedades.add(jugadorActual.obtenerPropiedades(estadoHipoteca).get)
+
 
 }
-*/
+
 
 public void obtenerRanking(){
 
@@ -264,8 +267,16 @@ public int obtenerSaldoJugadorActual(){
 
 private void salidaJugadores(){
 
-        throw new UnsupportedOperationException("Sin implementar");
-
+    
+    for (int i=0;i<jugadores.size();i++)
+    {
+        jugadores.get(i).setCasillaActual(tablero.obtenerCasillaNumero(0));
+    }
+    
+    int numero = (int) (Math.random() * 4);
+    
+    jugadorActual=jugadores.get(numero);
+    
 }
 private void setCartaActual(Sorpresa cartaActual){
 
@@ -273,9 +284,13 @@ private void setCartaActual(Sorpresa cartaActual){
 
 }
 public void siguienteJugador(){
-
-    throw new UnsupportedOperationException("Sin implementar");
-
+    int numero=jugadores.indexOf(jugadorActual);
+    jugadorActual=jugadores.get((numero+1)%4);
+    if (jugadorActual.getEncarcelado())
+        estado=EstadoJuego.JA_ENCARCELADOCONOPCIONDELIBERTAD;
+    else
+        estado=EstadoJuego.JA_PREPARADO;
+               
 }
 /*
 int tirarDado(){
