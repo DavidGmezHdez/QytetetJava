@@ -139,13 +139,11 @@ public class TituloPropiedad {
     
     }
     
-/*    
+
     boolean tengoPropietario(){
-    
-    
-    
+    return propietario != null;
     }
-*/
+
     Jugador getPropietario(){
        return propietario;
     }

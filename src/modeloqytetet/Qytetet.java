@@ -139,6 +139,17 @@ public boolean edificarHotel(int numeroCasilla){
 
 */
 
+boolean jugadorActualEnCalleLibre(){
+    boolean resultado = false;
+    if (jugadorActual.getCasillaActual().soyEdificable()==true && jugadorActual.getCasillaActual().tengoPropietario()==false)
+        resultado = true;
+return resultado;
+}
+boolean jugadorActualEncarcelado(){
+    return jugadorActual.getEncarcelado();
+}
+
+
 private void encarcelarJugador(){
 
   throw new UnsupportedOperationException("Sin implementar");
@@ -213,7 +224,7 @@ public boolean intentarSalirCarcel(MetodoSalirCarcel metodo){
 
 public void jugar(){
 
-    throw new UnsupportedOperationException("Sin implementar");
+    tirarDado();
 
 }
 
@@ -243,12 +254,20 @@ public int obtenerPropiedadesJugador() {
 }
 
 
-public ArrayList <int[]> obtenerPropiedadesJugadorSegunEstadoHipoteca(boolean estadoHipoteca){
-    ArrayList<int[]>propieades=new ArrayList<>();
+public ArrayList <Integer> obtenerPropiedadesJugadorSegunEstadoHipoteca(boolean estadoHipoteca){
+    ArrayList<Integer> casillas = new ArrayList<>();
+    String nombre;
     
-    propiedades.add(jugadorActual.obtenerPropiedades(estadoHipoteca).get)
-
-
+    for (int i=0;i<jugadorActual.getPropiedades().size();i++)
+    {
+        if(jugadorActual.getPropiedades().get(i).getHipotecada()==estadoHipoteca)
+        {
+        nombre=jugadorActual.getPropiedades().get(i).getNombre();
+        casillas.add(tablero.getCasillas().indexOf(nombre));
+        }
+    
+    }
+    return casillas;
 }
 
 
@@ -292,9 +311,9 @@ public void siguienteJugador(){
         estado=EstadoJuego.JA_PREPARADO;
                
 }
-/*
-int tirarDado(){
 
+int tirarDado(){
+    return dado.tirar();
 
 }
 public boolean venderPropiedad(int numeroCasilla){

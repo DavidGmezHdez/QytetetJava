@@ -14,6 +14,7 @@ public class Dado {
     
         Random r = new Random();
         int valorDado = r.nextInt(6)+1;
+        valor=valorDado;
         return valorDado;
     }
 public int getValor(){
