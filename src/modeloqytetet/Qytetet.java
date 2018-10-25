@@ -109,14 +109,48 @@ void actuarSiEnCasillaEdificable(){
 
 void actuarSiEnCasillaNoEdificable(){
 
-    throw new UnsupportedOperationException("Sin implementar");
-
+    setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
+    Casilla casillaActual=jugadorActual.getCasillaActual();
+    
+    if (casillaActual.getTipo()==TipoCasilla.IMPUESTO){
+        jugadorActual.pagarImpuesto();
+    }
+    else{
+        if (casillaActual.getTipo() == TipoCasilla.JUEZ){
+        encarcelarJugador();
+        }
+        else{
+        if (casillaActual.getTipo() == TipoCasilla.SORPRESA){
+            mazo.remove(cartaActual);
+            setEstadoJuego(EstadoJuego.JA_CONSORPRESA);
+        }
+        }
+     }
 }
 
 public void aplicarSorpresa(){
-
-    throw new UnsupportedOperationException("Sin implementar");
-
+    setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
+    
+    if (cartaActual.getSorpresa()==TipoSorpresa.SALIRCARCEL){
+        jugadorActual.setCartaLibertad(cartaActual);
+        mazo.add(cartaActual);
+    }
+    if (cartaActual.getSorpresa() == TipoSorpresa.PAGARCOBRAR){
+        jugadorActual.modificarSaldo(cartaActual.getValor());
+        if (jugadorActual.getSaldo()<0)
+            setEstadoJuego(EstadoJuego.ALGUNJUGADORENBANCARROTA);
+    }
+    else
+    {
+    
+    
+    
+    
+    }
+    
+    
+    
+    
 }
 
 /*
@@ -161,7 +195,7 @@ boolean jugadorActualEncarcelado(){
 
 private void encarcelarJugador(){
 
-  throw new UnsupportedOperationException("Sin implementar");
+  
 
 }
 
