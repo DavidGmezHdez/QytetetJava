@@ -116,23 +116,27 @@ public class TituloPropiedad {
     throw new UnsupportedOperationException("Sin implementar");
     
     }
-/*
-    int hipotecar(){
-    
-    
-    
-    }
-    int pagarAlquiler(){
-    
-    
-    
-    }
+//
+//    int hipotecar(){
+//    
+//    
+//    
+//    }
+//    int pagarAlquiler(){
+//    
+//    
+//    
+//    }
     boolean propietarioEncarcelado(){
+    boolean resultado=false;
+    if (propietario.getEncarcelado())
+        resultado=true;
     
+    return resultado;
     
     
     }
-*/    
+
     void setPropietario(Jugador propietario){
     
         this.propietario=propietario;

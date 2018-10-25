@@ -37,12 +37,16 @@ int cuantasCasasHotelesTengo(){
     }
     return resultado;
 }
-//
-//boolean deboPagarAlquiler(){
-//
-//
-//
-//}
+
+boolean deboPagarAlquiler(){
+    boolean resultado=false;
+    if (!casillaActual.propietarioEncarcelado() && casillaActual.tengoPropietario() 
+            && !esDeMiPropiedad(casillaActual.getTitulo()) && !casillaActual.getTitulo().getHipotecada())
+        resultado = true;
+    
+    return resultado;
+
+}
 Sorpresa devolverCartaLibertad(){
     Sorpresa inter = new Sorpresa (cartaLibertad.getTexto(),cartaLibertad.getValor(),cartaLibertad.getSorpresa());
     cartaLibertad=null;
@@ -70,11 +74,9 @@ void eliminarDeMisPropiedades(TituloPropiedad titulo){
 
 private boolean esDeMiPropiedad(TituloPropiedad titulo){
     boolean resultado=false;
-    for (int i=0;i<propiedades.size();i++)
-    {
-        if (propiedades.get(i)==titulo)
+    if (propiedades.contains(titulo))
             resultado=true;
-    }
+    
     return resultado;
 }
 //
@@ -106,10 +108,11 @@ String getNombre(){
     return nombre;
 
 }
+
 ArrayList<TituloPropiedad> getPropiedades(){
     return propiedades;
-            
-            }            
+}            
+
 public int getSaldo(){
 
     return saldo;
@@ -142,7 +145,10 @@ int obtenerCapital(){
     int resultado=saldo;
     for (int i=0;i<propiedades.size();i++){
     resultado=resultado + propiedades.get(i).getPrecioCompra()+
-            propiedades.get(i).getPrecioEdificar()*(propiedades.get(i).getNumCasas()+propiedades.get(i).getNumCasas());
+            (propiedades.get(i).getPrecioEdificar()*propiedades.get(i).getNumHoteles())
+            +(propiedades.get(i).getPrecioEdificar()*propiedades.get(i).getNumCasas());
+            if (propiedades.get(i).getHipotecada())
+                resultado-=propiedades.get(i).getHipotecaBase();
             }
     
     return resultado;

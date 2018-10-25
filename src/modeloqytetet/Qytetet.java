@@ -1,7 +1,7 @@
 package modeloqytetet;
 import java.util.ArrayList;
 public class Qytetet {
-
+    private static final Qyetet instance = new Qytetet();
     private static ArrayList<Sorpresa> mazo = new ArrayList<>();
     private static Tablero tablero=null;
     public static int MAX_JUGADORES = 4;
@@ -13,7 +13,7 @@ public class Qytetet {
     private Jugador jugadorActual;
     private static ArrayList<Jugador>jugadores=new ArrayList<>();
     private EstadoJuego estado;
-    
+    private static Dado dado = Dado.getDado();
     
     
     
@@ -93,9 +93,18 @@ public class Qytetet {
     
 
 void actuarSiEnCasillaEdificable(){
-
-throw new UnsupportedOperationException("Sin implementar");
+    boolean deboPagar = jugadorActual.deboPagarAlquiler();
+    Casilla casilla= jugadorActual.getCasillaActual();
+    boolean tengopropietario = casilla.tengoPropietario();
     
+    if (deboPagar)
+        jugadorActual.pagarAlquiler();
+    
+
+    if(tengopropietario)
+        setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
+    else
+        setEstadoJuego(EstadoJuego.JA_PUEDECOMPRAROGESTIONAR);
 }
 
 void actuarSiEnCasillaNoEdificable(){
@@ -179,18 +188,14 @@ Jugador getJugadorActual(){
 ArrayList<Jugador> getJugadores(){
         return jugadores;   
 }
-/*
-Sorpresa getMazo(){
-    Sorpresa[0..*]
-            
-}
+
 
 public int getValorDado(){
 
-
+    return dado.getValor();
 
 }
-*/
+
 public void hipotecarPropiedad(int numeroCasilla){
 
     throw new UnsupportedOperationException("Sin implementar");
@@ -225,7 +230,8 @@ public boolean intentarSalirCarcel(MetodoSalirCarcel metodo){
 public void jugar(){
 
     tirarDado();
-
+    int casilla = tablero.obtenerCasillaFinal(jugadorActual.getCasillaActual(), dado.getValor()).getNumeroCasilla();
+    mover(casilla);
 }
 
 void mover(int numCasillaDestino){
@@ -243,13 +249,21 @@ public Casilla obtenerCasillaJugadorActual(){
 
 
 public Casilla obtenerCasillasTablero(){
-    return Casillas[NUM_CASILLAS]
+    return 
 
             }
 
-public int obtenerPropiedadesJugador() {
+public ArrayList<Integer> obtenerPropiedadesJugador() {
+    ArrayList<Integer> casillas=new ArrayList<>();
+    String nombre;
+    for (int i=0;i<jugadorActual.getPropiedades().size();i++)
+    {
+        nombre=jugadorActual.getPropiedades().get(i).getNombre();
+        casillas.add(tablero.getCasillas().indexOf(nombre));
+    }
     
-    int[0..*];
+    return casillas;
+   
     
 }
 
@@ -277,12 +291,12 @@ public void obtenerRanking(){
 
 }
 
-/*
+
 public int obtenerSaldoJugadorActual(){
 
-
+    return jugadorActual.getSaldo();
 }
-*/
+
 
 private void salidaJugadores(){
 
@@ -306,9 +320,10 @@ public void siguienteJugador(){
     int numero=jugadores.indexOf(jugadorActual);
     jugadorActual=jugadores.get((numero+1)%4);
     if (jugadorActual.getEncarcelado())
-        estado=EstadoJuego.JA_ENCARCELADOCONOPCIONDELIBERTAD;
+       setEstadoJuego(EstadoJuego.JA_ENCARCELADOCONOPCIONDELIBERTAD);
+        
     else
-        estado=EstadoJuego.JA_PREPARADO;
+        setEstadoJuego(EstadoJuego.JA_PREPARADO);
                
 }
 
@@ -321,5 +336,23 @@ public boolean venderPropiedad(int numeroCasilla){
 
 
 }
-*/
+
+
+public void setEstadoJuego(EstadoJuego estadojuego){
+    estado=estadojuego;
+   
+}
+
+
+public EstadoJuego getEstadoJuego()
+{
+    return estado;
+}
+
+
+
+
+
+
+
 }

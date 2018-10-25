@@ -4,11 +4,12 @@ import java.util.Random;
 public class Dado {
 
     private int valor;
-    private static final Dado dado=new Dado();
-    
+    private static final Dado instance=new Dado();
+   
     private Dado(){
     valor=0;
     }
+   
     
     int tirar(){
     
@@ -23,7 +24,7 @@ public int getValor(){
 
 }
 public static Dado getDado() {
-    return dado;
+    return instance;
 }
 
     @Override

@@ -65,7 +65,7 @@ public class Casilla {
             Coste = titulo.getPrecioCompra();
         }
     }
-/*
+
     TituloPropiedad signarPropietario(Jugador jugador){
     
     
@@ -78,20 +78,22 @@ public class Casilla {
     }
     boolean propietarioEncarcelado(){
     
-    
+        return titulo.propietarioEncarcelado();
     
     }
     boolean soyEdificable(){
+    boolean resultado = false;
+    if (tipo == TipoCasilla.CALLE)
+        resultado = true;
     
-    
-    
+    return resultado;
     }
+    
     boolean tengoPropietario(){
-    
-    
+    return titulo.tengoPropietario();
     }
     
-*/    
+   
     
     
     
