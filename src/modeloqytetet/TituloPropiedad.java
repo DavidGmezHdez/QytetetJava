@@ -75,7 +75,7 @@ public class TituloPropiedad {
    int getNumCasas() {
         return numCasas;
     }
- /*   
+ 
     int calcularCosteCancelar(){
 
 
@@ -85,8 +85,14 @@ public class TituloPropiedad {
     
     
     }
-    int calcularImporteAlquiler(){
-    
+    double calcularImporteAlquiler(){
+        double costeAlquiler;
+            
+        costeAlquiler = alquilerBase + numHoteles*0.5 + numCasas*2;
+        
+        propietario.modificarSaldo(costeAlquiler);
+        
+        return costeAlquiler;
     
     }
     int calcularPrecioVenta(){
@@ -95,7 +101,7 @@ public class TituloPropiedad {
     
     }
     
-    */
+    
     void cancelarHipoteca(){
     
     throw new UnsupportedOperationException("Sin implementar");
@@ -151,6 +157,7 @@ public class TituloPropiedad {
     Jugador getPropietario(){
        return propietario;
     }
-
+    
+    
 
 }

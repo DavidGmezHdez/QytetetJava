@@ -1,7 +1,7 @@
 package modeloqytetet;
 import java.util.ArrayList;
 public class Qytetet {
-    private static final Qyetet instance = new Qytetet();
+    private static final Qytetet instance = new Qytetet();
     private static ArrayList<Sorpresa> mazo = new ArrayList<>();
     private static Tablero tablero=null;
     public static int MAX_JUGADORES = 4;
@@ -99,8 +99,10 @@ void actuarSiEnCasillaEdificable(){
     
     if (deboPagar)
         jugadorActual.pagarAlquiler();
+        if(jugadorActual.getSaldo()<0)
+            setEstadoJuego(EstadoJuego.ALGUNJUGADORENBANCARROTA);
     
-
+if(EstadoJuego!=EstadoJuego.ALGUNJUGADORENBANCARROTA)
     if(tengopropietario)
         setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
     else
@@ -130,6 +132,11 @@ void actuarSiEnCasillaNoEdificable(){
 
 public void aplicarSorpresa(){
     setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
+    int valor=0;
+    boolean casillaCarcel;
+    int cantidad=0;
+    int numeroTotal=0;
+    
     
     if (cartaActual.getSorpresa()==TipoSorpresa.SALIRCARCEL){
         jugadorActual.setCartaLibertad(cartaActual);
@@ -140,20 +147,44 @@ public void aplicarSorpresa(){
         if (jugadorActual.getSaldo()<0)
             setEstadoJuego(EstadoJuego.ALGUNJUGADORENBANCARROTA);
     }
-    else
+    else if(cartaActual.getSorpresa() == TipoSorpresa.IRACASILLA)
     {
+            valor = cartaActual.getValor();
+            casillaCarcel = tablero.esCasillaCarcel(valor);
     
-    
-    
-    
+        if (casillaCarcel){
+            encarcelarJugador();
+        }
+        else{
+            mover(valor);
+        }
+    }
+    else if(cartaActual.getSorpresa() == TipoSorpresa.PORCASAHOTEL)
+    {
+        cantidad=cartaActual.getValor();
+        numeroTotal=jugadorActual.cuantasCasasHotelesTengo();
+        jugadorActual.modificarSaldo(cantidad*numeroTotal);
+        if (jugadorActual.getSaldo()<0)
+            setEstadoJuego(EstadoJuego.ALGUNJUGADORENBANCARROTA);
     }
     
-    
-    
-    
+    else if(cartaActual.getSorpresa() == TipoSorpresa.PORJUGADOR)
+    {
+        for(int i=0;i<jugadores.size();i++)
+        {
+            siguienteJugador();
+            jugadorActual.modificarSaldo(cartaActual.getValor());
+            if(jugadorActual.getSaldo()<0)
+                setEstadoJuego(EstadoJuego.ALGUNJUGADORENBANCARROTA);
+            
+            jugadorActual.modificarSaldo(-cartaActual.getValor());
+            if(jugadorActual.getSaldo()<0)
+                setEstadoJuego(EstadoJuego.ALGUNJUGADORENBANCARROTA);
+        }
+    }
 }
 
-/*
+
 public boolean cancelarHipoteca(int numeroCasilla){
 
     
@@ -162,16 +193,41 @@ public boolean cancelarHipoteca(int numeroCasilla){
 
 
 public boolean comprarTituloPropiedad(){
-
-
-
+    boolean comprado=false;
+    TituloPropiedad titulo=jugadorActual.getCasillaActual().asignarPropietario(jugadorActual);
+    int costeCompra = jugadorActual.getCasillaActual().getCoste();
+    if(costeCompra<jugadorActual.getSaldo())
+        jugadorActual.getPropiedades().add(titulo);
+        jugadorActual.modificarSaldo(-costeCompra);
+    
+        if(comprado==true)
+            setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
+        
+        return comprado;
 }
 
 
 public boolean edificarCasa(int numeroCasilla){
-
-
-
+    boolean edificada=false;
+    Casilla casilla=tablero.obtenerCasillaNumero(numeroCasilla);
+    TituloPropiedad titulo=jugadorActual.getCasillaActual().getTitulo();
+    int numCasas=titulo.getNumCasas();
+    edificarCasa(numCasas);
+    if(numCasas<4){
+        int costeEdificarCasa=titulo.getPrecioEdificar();
+        boolean tengoSaldo=jugadorActual.tengoSaldo(costeEdificarCasa);
+        if(tengoSaldo){
+            numCasas++;
+            titulo.edificarCasa();
+            jugadorActual.modificarSaldo(-costeEdificarCasa);
+            edificada=true;
+        } 
+    }
+    
+    if(edificada==true)
+        setEstadoJuego(EstadoJuego.JA_PUEDECOMPRAROGESTIONAR);
+    
+    return edificada;
 }
 
 public boolean edificarHotel(int numeroCasilla){
@@ -180,7 +236,7 @@ public boolean edificarHotel(int numeroCasilla){
 
 }
 
-*/
+
 
 boolean jugadorActualEnCalleLibre(){
     boolean resultado = false;
@@ -194,9 +250,22 @@ boolean jugadorActualEncarcelado(){
 
 
 private void encarcelarJugador(){
-
-  
-
+    Casilla casillaCarcel;
+    Sorpresa carta;
+    
+    if (!jugadorActual.tengoCartaLibertad()){
+        casillaCarcel = tablero.getCarcel();
+        jugadorActual.irACarcel(casillaCarcel);
+        jugadorActual.setCasillaActual(casillaCarcel);
+        jugadorActual.setEncarcelado(true);
+        setEstadoJuego(EstadoJuego.JA_ENCARCELADO);
+    }
+    else
+    {
+    carta=jugadorActual.devolverCartaLibertad();
+    mazo.set(MAX_JUGADORES, carta);
+    setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
+    }
 }
 
 
@@ -253,13 +322,33 @@ private void inicializarJugadores(ArrayList<String> nombres){
 }
 
 
-/*
+
 public boolean intentarSalirCarcel(MetodoSalirCarcel metodo){
+    if(metodo==MetodoSalirCarcel.TIRANDODAO){
+        int resultado=tirarDado();
+        if(resultado>=5)
+            jugadorActual.setEncarcelado(false);  
+    }
+    else if(metodo==MetodoSalirCarcel.PAGANDOLIBERTAD){
+        int cantidad=PRECIO_LIBERTAD;
+        jugadorActual.pagarLibertad(cantidad);
+        boolean tengoSaldo=jugadorActual.tengoSaldo(cantidad);
+        if(tengoSaldo){
+            jugadorActual.setEncarcelado(false);
+            jugadorActual.modificarSaldo(-cantidad);
+        }
+    }
+    
+    boolean encarcelado=jugadorActual.getEncarcelado();
+    
+    if(encarcelado)
+        setEstadoJuego(EstadoJuego.JA_ENCARCELADO);
+    else
+        setEstadoJuego(EstadoJuego.JA_PREPARADO);
 
-
-
+    return encarcelado;
 }
-*/
+
 
 public void jugar(){
 

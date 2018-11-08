@@ -71,9 +71,9 @@ public class Casilla {
     
     }
 
-    int pagarAlquiler(){
+    double pagarAlquiler(){
     
-    
+        return titulo.calcularImporteAlquiler();
     
     }
     boolean propietarioEncarcelado(){
@@ -93,6 +93,12 @@ public class Casilla {
     return titulo.tengoPropietario();
     }
     
+    TituloPropiedad asignarPropietario(Jugador jugador){
+        if (!titulo.tengoPropietario())
+            titulo.setPropietario(jugador);
+        
+        return titulo;
+    }
    
     
     

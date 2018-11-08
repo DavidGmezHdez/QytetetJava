@@ -127,12 +127,13 @@ boolean hipotecarPropiedad(TituloPropiedad titulo){
 }
 */
 void irACarcel(Casilla casilla){
-
-throw new UnsupportedOperationException("Sin implementar");
-
+    if (casilla.getTipo()==TipoCasilla.CARCEL)
+    {
+    casillaActual=casilla;
+    }
 }
 
-int modificarSaldo(int cantidad){
+double modificarSaldo(double cantidad){
     if (cantidad>=0)
         saldo+=cantidad;
     else
@@ -169,7 +170,8 @@ ArrayList <TituloPropiedad> obtenerPropiedades(boolean hipotecada){
 
 void pagarAlquiler(){
 
-throw new UnsupportedOperationException("Sin implementar");
+    double costeAlquiler=casillaActual.pagarAlquiler();
+    modificarSaldo((int)-costeAlquiler);
 
 }
 void pagarImpuesto(){
@@ -228,8 +230,6 @@ boolean venderPropiedad(Casilla casilla){
 } 
 
 */
-
-
     @Override
     public String toString() {
         int capital = obtenerCapital();
