@@ -77,16 +77,17 @@ public class TituloPropiedad {
     }
  
     int calcularCosteCancelar(){
-
-
+        int costeCancelar=0;
+        costeCancelar= (int) (calcularCosteHipotecar()+calcularCosteHipotecar()*0.1);
+        return costeCancelar;
     }
     int calcularCosteHipotecar(){
-    
-    
-    
+    int costeHipoteca=0;
+    costeHipoteca = (int) (hipotecaBase+numCasas*0.5*hipotecaBase+numHoteles*hipotecaBase);
+    return costeHipoteca;
     }
     double calcularImporteAlquiler(){
-        double costeAlquiler;
+        double costeAlquiler=0;
             
         costeAlquiler = alquilerBase + numHoteles*0.5 + numCasas*2;
         
@@ -96,9 +97,9 @@ public class TituloPropiedad {
     
     }
     int calcularPrecioVenta(){
-    
-    
-    
+        int costeVenta=0;
+        costeVenta=(int) (precioCompra+(numCasas+numHoteles)*precioEdificar*factorRevalorizacion);
+        return costeVenta;
     }
     
     
@@ -114,20 +115,23 @@ public class TituloPropiedad {
     }
     void edificarCasa(){
     
-    throw new UnsupportedOperationException("Sin implementar");
+        numCasas++;
     
     }
     void edificarHotel(){
     
-    throw new UnsupportedOperationException("Sin implementar");
+        numHoteles++;
     
     }
-//
-//    int hipotecar(){
-//    
-//    
-//    
-//    }
+
+    int hipotecar(){
+        int costeHipoteca=calcularCosteHipotecar();
+        setHipotecada(true);
+        
+        return costeHipoteca;
+    
+    
+    }
 //    int pagarAlquiler(){
 //    
 //    

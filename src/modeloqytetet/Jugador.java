@@ -17,12 +17,16 @@ private static ArrayList<TituloPropiedad>propiedades=new ArrayList <>();
         this.nombre = nombre;
     }
 
-//    
-//boolean cancelarHipoteca(TituloPropiedad titulo){
-//
-//
-//
-//}
+    
+boolean cancelarHipoteca(TituloPropiedad titulo){
+    boolean puedeCancelar=false;
+    int costeCancelar=titulo.calcularCosteCancelar();
+    if(saldo>costeCancelar){
+        titulo.cancelarHipoteca();
+        puedeCancelar=true;
+    }
+    return puedeCancelar;
+}
 //boolean comprarTituloPropiedad(){
 //
 //
@@ -39,35 +43,64 @@ int cuantasCasasHotelesTengo(){
 }
 
 boolean deboPagarAlquiler(){
-    boolean resultado=false;
-    if (!casillaActual.propietarioEncarcelado() && casillaActual.tengoPropietario() 
-            && !esDeMiPropiedad(casillaActual.getTitulo()) && !casillaActual.getTitulo().getHipotecada())
-        resultado = true;
-    
-    return resultado;
 
+    
+    boolean esDeMiPropiedad= esDeMiPropiedad(casillaActual.getTitulo());
+    boolean tienePropietario=!esDeMiPropiedad && casillaActual.tengoPropietario();
+    boolean encarcelado=!esDeMiPropiedad && tienePropietario && casillaActual.propietarioEncarcelado();
+    boolean estaHipotecada=!esDeMiPropiedad && tienePropietario && casillaActual.getTitulo().getHipotecada();
+    boolean deboPagar= !esDeMiPropiedad && tienePropietario && !encarcelado && !estaHipotecada;
+        
+    return deboPagar;
 }
 Sorpresa devolverCartaLibertad(){
     Sorpresa inter = new Sorpresa (cartaLibertad.getTexto(),cartaLibertad.getValor(),cartaLibertad.getSorpresa());
     cartaLibertad=null;
     return inter;
 }
-//
-//boolean edificarCasa(TituloPropiedad titulo){
-//
-//
-//
-//}
-//boolean edificarHotel(TituloPropiedad titulo){
-//
-//
-//
-//}
+
+boolean edificarCasa(TituloPropiedad titulo){
+    boolean hayEspacio=titulo.getNumCasas()<4;
+    boolean tengoSaldo=false;
+    int costeEdificarCasa=0;    
+    if(hayEspacio){
+        costeEdificarCasa=titulo.getPrecioEdificar();
+        tengoSaldo=tengoSaldo(costeEdificarCasa);
+    }
+    
+    if(hayEspacio && tengoSaldo){
+        casillaActual.getTitulo().edificarCasa();
+        modificarSaldo(-costeEdificarCasa);
+    }
+    
+    boolean edificada=hayEspacio && tengoSaldo;
+    
+    return edificada;
+}
+boolean edificarHotel(TituloPropiedad titulo){
+    boolean hayEspacio=titulo.getNumHoteles()<4;
+    boolean tengoSaldo=false;
+    int costeEdificarHotel=0;    
+    if(hayEspacio){
+        costeEdificarHotel=titulo.getPrecioEdificar();
+        tengoSaldo=tengoSaldo(costeEdificarHotel);
+    }
+    
+    if(hayEspacio && tengoSaldo){
+        casillaActual.getTitulo().edificarHotel();
+        modificarSaldo(-costeEdificarHotel);
+    }
+    
+    boolean edificada=hayEspacio && tengoSaldo;
+    
+    return edificada;
+
+
+}
 
 void eliminarDeMisPropiedades(TituloPropiedad titulo){
-
-    throw new UnsupportedOperationException("Sin implementar");
-
+    propiedades.remove(titulo);
+    titulo.setPropietario(null);
 }
 
 
@@ -119,13 +152,13 @@ public int getSaldo(){
 
 }
 
-/*
-boolean hipotecarPropiedad(TituloPropiedad titulo){
 
-
+void hipotecarPropiedad(TituloPropiedad titulo){
+    int coste=titulo.hipotecar();
+    modificarSaldo(coste);
 
 }
-*/
+
 void irACarcel(Casilla casilla){
     if (casilla.getTipo()==TipoCasilla.CARCEL)
     {
@@ -170,8 +203,9 @@ ArrayList <TituloPropiedad> obtenerPropiedades(boolean hipotecada){
 
 void pagarAlquiler(){
 
-    double costeAlquiler=casillaActual.pagarAlquiler();
-    modificarSaldo((int)-costeAlquiler);
+    double costeAlquiler=casillaActual.getTitulo().calcularImporteAlquiler();
+    casillaActual.getTitulo().getPropietario().modificarSaldo(costeAlquiler);
+    modificarSaldo(-costeAlquiler);
 
 }
 void pagarImpuesto(){
@@ -222,14 +256,15 @@ if (saldo>cantidad)
 return tengo;
 }
 
-/*
-boolean venderPropiedad(Casilla casilla){
 
-
-
+void venderPropiedad(Casilla casilla){
+    TituloPropiedad titulo=casilla.getTitulo();
+    eliminarDeMisPropiedades(titulo);
+    int precioVenta=titulo.calcularPrecioVenta();
+    modificarSaldo(precioVenta);
 } 
 
-*/
+
     @Override
     public String toString() {
         int capital = obtenerCapital();

@@ -102,7 +102,7 @@ void actuarSiEnCasillaEdificable(){
         if(jugadorActual.getSaldo()<0)
             setEstadoJuego(EstadoJuego.ALGUNJUGADORENBANCARROTA);
     
-if(EstadoJuego!=EstadoJuego.ALGUNJUGADORENBANCARROTA)
+if(estado!=EstadoJuego.ALGUNJUGADORENBANCARROTA)
     if(tengopropietario)
         setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
     else
@@ -186,9 +186,11 @@ public void aplicarSorpresa(){
 
 
 public boolean cancelarHipoteca(int numeroCasilla){
-
-    
-    
+    Casilla casilla=jugadorActual.getCasillaActual();
+    TituloPropiedad titulo=casilla.getTitulo();
+    boolean puedeCancelar=jugadorActual.cancelarHipoteca(titulo);
+    setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
+    return puedeCancelar;
 }
 
 
@@ -208,30 +210,49 @@ public boolean comprarTituloPropiedad(){
 
 
 public boolean edificarCasa(int numeroCasilla){
-    boolean edificada=false;
     Casilla casilla=tablero.obtenerCasillaNumero(numeroCasilla);
-    TituloPropiedad titulo=jugadorActual.getCasillaActual().getTitulo();
+    TituloPropiedad titulo=casilla.getTitulo();
+    boolean edificada=jugadorActual.edificarCasa(titulo);
     int numCasas=titulo.getNumCasas();
-    edificarCasa(numCasas);
+    
     if(numCasas<4){
         int costeEdificarCasa=titulo.getPrecioEdificar();
         boolean tengoSaldo=jugadorActual.tengoSaldo(costeEdificarCasa);
-        if(tengoSaldo){
-            numCasas++;
+        if (tengoSaldo){
             titulo.edificarCasa();
+            numCasas++;
             jugadorActual.modificarSaldo(-costeEdificarCasa);
-            edificada=true;
-        } 
+            edificada=true;            
+        }  
     }
     
-    if(edificada==true)
-        setEstadoJuego(EstadoJuego.JA_PUEDECOMPRAROGESTIONAR);
+    if(edificada)
+        setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
     
     return edificada;
 }
 
 public boolean edificarHotel(int numeroCasilla){
-
+    Casilla casilla=tablero.obtenerCasillaNumero(numeroCasilla);
+    TituloPropiedad titulo=casilla.getTitulo();
+    boolean edificada=jugadorActual.edificarHotel(titulo);
+    int numHoteles=titulo.getNumHoteles();
+    
+    if(numHoteles<4){
+        int costeEdificarHotel=titulo.getPrecioEdificar();
+        boolean tengoSaldo=jugadorActual.tengoSaldo(costeEdificarHotel);
+        if (tengoSaldo){
+            titulo.edificarHotel();
+            numHoteles++;
+            jugadorActual.modificarSaldo(-costeEdificarHotel);
+            edificada=true;            
+        }  
+    }
+    
+    if(edificada)
+        setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
+    
+    return edificada;
 
 
 }
@@ -300,17 +321,18 @@ public int getValorDado(){
 }
 
 public void hipotecarPropiedad(int numeroCasilla){
-
-    throw new UnsupportedOperationException("Sin implementar");
-
+    Casilla casilla=tablero.obtenerCasillaNumero(numeroCasilla);
+    TituloPropiedad titulo=casilla.getTitulo();
+    jugadorActual.hipotecarPropiedad(titulo);
+    setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
 }
 
 
 public void inicializarJuego(ArrayList<String> nombres){
-
+    inicializarJugadores(nombres);
     inicializarTablero();
     inicializarCartasSorpresa();
-    inicializarJugadores(nombres);
+    salidaJugadores();
 
 }
 
@@ -358,23 +380,28 @@ public void jugar(){
 }
 
 void mover(int numCasillaDestino){
-
-    throw new UnsupportedOperationException("Sin implementar");
-
+    Casilla casillaInicial=jugadorActual.getCasillaActual();
+    Casilla casillaFinal=tablero.obtenerCasillaFinal(casillaInicial, numCasillaDestino);
+    jugadorActual.setCasillaActual(casillaFinal);
+    
+    if(numCasillaDestino<casillaInicial.getNumeroCasilla())
+        jugadorActual.modificarSaldo(SALDO_SALIDA);
+    
+    if(casillaFinal.soyEdificable())
+        actuarSiEnCasillaEdificable();
+    else
+        actuarSiEnCasillaNoEdificable();
 }
 
 
 public Casilla obtenerCasillaJugadorActual(){
-
-
-
+    return jugadorActual.getCasillaActual();
 }
 
 
-public Casilla obtenerCasillasTablero(){
-    return 
-
-            }
+public ArrayList<Casilla> obtenerCasillasTablero(){
+    return tablero.getCasillas();
+}
 
 public ArrayList<Integer> obtenerPropiedadesJugador() {
     ArrayList<Integer> casillas=new ArrayList<>();
@@ -454,9 +481,11 @@ int tirarDado(){
     return dado.tirar();
 
 }
-public boolean venderPropiedad(int numeroCasilla){
-
-
+void venderPropiedad(int numeroCasilla){
+    Casilla casilla=jugadorActual.getCasillaActual();
+    jugadorActual.venderPropiedad(casilla);
+    setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
+    
 
 }
 

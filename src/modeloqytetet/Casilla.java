@@ -65,12 +65,6 @@ public class Casilla {
             Coste = titulo.getPrecioCompra();
         }
     }
-
-    TituloPropiedad signarPropietario(Jugador jugador){
-    
-    
-    }
-
     double pagarAlquiler(){
     
         return titulo.calcularImporteAlquiler();
