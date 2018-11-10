@@ -1,5 +1,6 @@
 package modeloqytetet;
 import java.util.ArrayList;
+import java.util.Collections;
 public class Qytetet {
     private static final Qytetet instance = new Qytetet();
     private static ArrayList<Sorpresa> mazo = new ArrayList<>();
@@ -195,17 +196,10 @@ public boolean cancelarHipoteca(int numeroCasilla){
 
 
 public boolean comprarTituloPropiedad(){
-    boolean comprado=false;
-    TituloPropiedad titulo=jugadorActual.getCasillaActual().asignarPropietario(jugadorActual);
-    int costeCompra = jugadorActual.getCasillaActual().getCoste();
-    if(costeCompra<jugadorActual.getSaldo())
-        jugadorActual.getPropiedades().add(titulo);
-        jugadorActual.modificarSaldo(-costeCompra);
-    
-        if(comprado==true)
-            setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
-        
-        return comprado;
+    boolean comprado=jugadorActual.comprarTituloPropiedad();
+    if(comprado)
+        setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
+    return comprado;
 }
 
 
@@ -346,7 +340,7 @@ private void inicializarJugadores(ArrayList<String> nombres){
 
 
 public boolean intentarSalirCarcel(MetodoSalirCarcel metodo){
-    if(metodo==MetodoSalirCarcel.TIRANDODAO){
+    if(metodo==MetodoSalirCarcel.TIRANDODADO){
         int resultado=tirarDado();
         if(resultado>=5)
             jugadorActual.setEncarcelado(false);  
@@ -437,7 +431,7 @@ public ArrayList <Integer> obtenerPropiedadesJugadorSegunEstadoHipoteca(boolean 
 
 public void obtenerRanking(){
 
-    throw new UnsupportedOperationException("Sin implementar");
+    Collections.sort(jugadores);
 
 }
 

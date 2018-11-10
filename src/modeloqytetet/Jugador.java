@@ -27,11 +27,21 @@ boolean cancelarHipoteca(TituloPropiedad titulo){
     }
     return puedeCancelar;
 }
-//boolean comprarTituloPropiedad(){
-//
-//
-//
-//}
+boolean comprarTituloPropiedad(){
+    boolean comprado = false;
+    int costeCompra = casillaActual.getCoste();
+        if(costeCompra<saldo){
+            comprado = true;
+            TituloPropiedad titulo = casillaActual.asignarPropietario(this);
+            titulo.setPropietario(this);
+            propiedades.add(titulo);
+            this.modificarSaldo(-costeCompra);
+        }
+        
+return comprado;
+
+
+}
 int cuantasCasasHotelesTengo(){
     int resultado = 0;
     for (int i=0;i<propiedades.size();i++)
@@ -269,7 +279,7 @@ void venderPropiedad(Casilla casilla){
     public String toString() {
         int capital = obtenerCapital();
         return "Jugador{" + "encarcelado=" + encarcelado 
-                + ", nombre=" + nombre + ", saldo=" + saldo +",saldo=" + capital + ", cartaLibertad=" + cartaLibertad 
+                + ", nombre=" + nombre + ", saldo=" + saldo +",capital=" + capital + ", cartaLibertad=" + cartaLibertad 
                 + ", casillaActual=" + casillaActual + '}';
     }
     
