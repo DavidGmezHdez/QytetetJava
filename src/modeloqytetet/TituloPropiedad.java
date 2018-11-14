@@ -103,9 +103,11 @@ public class TituloPropiedad {
     }
     
     
-    void cancelarHipoteca(){
+    boolean cancelarHipoteca(){
     
-    throw new UnsupportedOperationException("Sin implementar");
+    hipotecada=false;
+    
+    return true;
     
     }
     void cobrarAlquiler(int coste){
@@ -132,11 +134,12 @@ public class TituloPropiedad {
     
     
     }
-//    int pagarAlquiler(){
-//    
-//    
-//    
-//    }
+    int pagarAlquiler(){
+    int costeAlquiler = (int) calcularImporteAlquiler();
+    propietario.modificarSaldo(costeAlquiler);
+        
+    return costeAlquiler;
+    }
     boolean propietarioEncarcelado(){
     boolean resultado=false;
     if (propietario.getEncarcelado())

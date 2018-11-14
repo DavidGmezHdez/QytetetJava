@@ -88,24 +88,18 @@ boolean edificarCasa(TituloPropiedad titulo){
     return edificada;
 }
 boolean edificarHotel(TituloPropiedad titulo){
-    boolean hayEspacio=titulo.getNumHoteles()<4;
-    boolean tengoSaldo=false;
-    int costeEdificarHotel=0;    
-    if(hayEspacio){
-        costeEdificarHotel=titulo.getPrecioEdificar();
-        tengoSaldo=tengoSaldo(costeEdificarHotel);
+    boolean edificada=false;
+    int numHoteles=titulo.getNumHoteles();
+    if(numHoteles<4){
+        int costeEdificarHotel=titulo.getPrecioEdificar();
+        boolean tengoSaldo=tengoSaldo(costeEdificarHotel);
+        if(tengoSaldo){
+            titulo.edificarHotel();
+            modificarSaldo(-costeEdificarHotel);
+            edificada=true;
+        }
     }
-    
-    if(hayEspacio && tengoSaldo){
-        casillaActual.getTitulo().edificarHotel();
-        modificarSaldo(-costeEdificarHotel);
-    }
-    
-    boolean edificada=hayEspacio && tengoSaldo;
-    
     return edificada;
-
-
 }
 
 void eliminarDeMisPropiedades(TituloPropiedad titulo){
@@ -122,13 +116,15 @@ private boolean esDeMiPropiedad(TituloPropiedad titulo){
     
     return resultado;
 }
-//
-//boolean estoyEnCalleLibre(){
-//
-//
-//
-//
-//}
+
+boolean estoyEnCalleLibre(){
+    boolean calleLibre=false;
+    
+    if(casillaActual.getTitulo().getPropietario()!=null)
+        calleLibre=true;
+
+    return calleLibre;
+}
 
 
 Sorpresa getCartaLibertad(){
@@ -177,10 +173,7 @@ void irACarcel(Casilla casilla){
 }
 
 double modificarSaldo(double cantidad){
-    if (cantidad>=0)
-        saldo+=cantidad;
-    else
-        saldo-=cantidad;
+    saldo+=cantidad;
     
     return saldo;
 }

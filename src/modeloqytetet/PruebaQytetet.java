@@ -81,14 +81,73 @@ public class PruebaQytetet {
        
        System.out.println(juego.getTablero().toString());
        
-
-       
-       
        System.out.println(juego);
        
+       for(int i=0;i<juego.getJugadores().size();i++)
+        System.out.println(juego.getJugadores().get(i).getCasillaActual());
+     
+      // Vamos a caer en todas las Sorpresas
+     
+       juego.jugar();
+
+       juego.mover(2);
+       System.out.println(juego.getJugadorActual().getCasillaActual());
+       juego.aplicarSorpresa();
        
+       juego.mover(8);
+       System.out.println(juego.getJugadorActual().getCasillaActual());
+       System.out.println(juego.getCartaActual());
+       juego.aplicarSorpresa();
+       System.out.println(juego.getJugadorActual().getCasillaActual());
        
+       juego.mover(16);
+       System.out.println(juego.getJugadorActual().getCasillaActual());
+       System.out.println(juego.getCartaActual());
+       juego.aplicarSorpresa();
+        System.out.println(juego.getJugadorActual().getCasillaActual());
+       
+       juego.mover(9);
+       System.out.println(juego.getJugadorActual().getCasillaActual());
+       
+      
+        //Probando a hipotecar, cancelar hipoteca, edificar...
+       juego.jugar();
+       juego.hipotecarPropiedad(5);
+       juego.cancelarHipoteca(5);
+       juego.venderPropiedad(5);
+       juego.comprarTituloPropiedad();
+       juego.edificarCasa(7);
+       System.out.println(juego.getJugadorActual());
+       
+        //Probar a salir de la cárcel
         
+       juego.getJugadorActual().irACarcel(juego.obtenerCasillasTablero().get(14));
+       System.out.println(juego.getJugadorActual().getCasillaActual());
+       if(juego.getJugadorActual().tengoCartaLibertad()){
+           juego.intentarSalirCarcel(MetodoSalirCarcel.PAGANDOLIBERTAD);
+       }
+       
+       else{
+           boolean consigue = juego.intentarSalirCarcel(MetodoSalirCarcel.TIRANDODADO);
+           
+           if(consigue){
+               System.out.println("Consigue salir de la cárcel");
+           }
+           
+           else{
+               System.out.println("F");
+           }
+       }
+        
+       
+       // Probar obtener ránking
+       System.out.println(juego.getJugadores());
+       juego.getJugadorActual().modificarSaldo(-300);
+       juego.siguienteJugador();
+       juego.getJugadorActual().modificarSaldo(300);
+       juego.obtenerRanking();
+       System.out.println(juego.getJugadores());
+       
+       
     }
-    
 }
