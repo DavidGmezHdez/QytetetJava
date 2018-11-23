@@ -198,15 +198,6 @@ public boolean cancelarHipoteca(int numeroCasilla){
 
 public boolean comprarTituloPropiedad(){
     boolean comprado=jugadorActual.comprarTituloPropiedad();
-    int costeCompra=jugadorActual.getCasillaActual().getCoste();
-    if(costeCompra<jugadorActual.getSaldo()){
-        TituloPropiedad titulo=jugadorActual.getCasillaActual().getTitulo();
-        titulo.setPropietario(jugadorActual);
-        jugadorActual.getCasillaActual().asignarPropietario(jugadorActual);
-        jugadorActual.getPropiedades().add(titulo);
-        jugadorActual.modificarSaldo(-costeCompra);
-        comprado=true;
-    }
     if(comprado)
         setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
     return comprado;
@@ -217,19 +208,6 @@ public boolean edificarCasa(int numeroCasilla){
     Casilla casilla=tablero.obtenerCasillaNumero(numeroCasilla);
     TituloPropiedad titulo=casilla.getTitulo();
     boolean edificada=jugadorActual.edificarCasa(titulo);
-    int numCasas=titulo.getNumCasas();
-    
-    if(numCasas<4){
-        int costeEdificarCasa=titulo.getPrecioEdificar();
-        boolean tengoSaldo=jugadorActual.tengoSaldo(costeEdificarCasa);
-        if (tengoSaldo){
-            titulo.edificarCasa();
-            numCasas++;
-            jugadorActual.modificarSaldo(-costeEdificarCasa);
-            edificada=true;            
-        }  
-    }
-    
     if(edificada)
         setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
     

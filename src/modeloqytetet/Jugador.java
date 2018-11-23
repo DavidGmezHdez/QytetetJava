@@ -54,11 +54,11 @@ int cuantasCasasHotelesTengo(){
 
 boolean deboPagarAlquiler(){
 
-    
-    boolean esDeMiPropiedad= esDeMiPropiedad(casillaActual.getTitulo());
-    boolean tienePropietario=!esDeMiPropiedad && casillaActual.tengoPropietario();
-    boolean encarcelado=!esDeMiPropiedad && tienePropietario && casillaActual.propietarioEncarcelado();
-    boolean estaHipotecada=!esDeMiPropiedad && tienePropietario && casillaActual.getTitulo().getHipotecada();
+    TituloPropiedad titulo=casillaActual.getTitulo();
+    boolean esDeMiPropiedad= esDeMiPropiedad(titulo);
+    boolean tienePropietario=!esDeMiPropiedad && titulo.tengoPropietario();
+    boolean encarcelado=!esDeMiPropiedad && tienePropietario && titulo.propietarioEncarcelado();
+    boolean estaHipotecada=!esDeMiPropiedad && tienePropietario && titulo.getHipotecada();
     boolean deboPagar= !esDeMiPropiedad && tienePropietario && !encarcelado && !estaHipotecada;
         
     return deboPagar;
@@ -79,7 +79,7 @@ boolean edificarCasa(TituloPropiedad titulo){
     }
     
     if(hayEspacio && tengoSaldo){
-        casillaActual.getTitulo().edificarCasa();
+        titulo.edificarCasa();
         modificarSaldo(-costeEdificarCasa);
     }
     
@@ -206,7 +206,7 @@ ArrayList <TituloPropiedad> obtenerPropiedades(boolean hipotecada){
 
 void pagarAlquiler(){
 
-    double costeAlquiler=casillaActual.getTitulo().calcularImporteAlquiler();
+    int costeAlquiler=(int) (casillaActual.getTitulo().calcularImporteAlquiler());
     casillaActual.getTitulo().getPropietario().modificarSaldo(costeAlquiler);
     modificarSaldo(-costeAlquiler);
 
