@@ -16,6 +16,15 @@ private static ArrayList<TituloPropiedad>propiedades=new ArrayList <>();
     public Jugador(String nombre) {
         this.nombre = nombre;
     }
+    
+    protected Jugador(Jugador otroJugador){
+        nombre=otroJugador.getNombre();
+        encarcelado=otroJugador.getEncarcelado();
+        saldo=otroJugador.getSaldo();
+        cartaLibertad=otroJugador.getCartaLibertad();
+        casillaActual=otroJugador.getCasillaActual();
+        propiedades=otroJugador.getPropiedades();
+    }
 
     
 boolean cancelarHipoteca(TituloPropiedad titulo){
@@ -70,41 +79,33 @@ Sorpresa devolverCartaLibertad(){
 }
 
 boolean edificarCasa(TituloPropiedad titulo){
-    boolean hayEspacio=titulo.getNumCasas()<4;
-    boolean tengoSaldo=false;
-    int costeEdificarCasa=0;    
-    if(hayEspacio){
-        costeEdificarCasa=titulo.getPrecioEdificar();
-        tengoSaldo=tengoSaldo(costeEdificarCasa);
-    }
+    int costeEdificarCasa=titulo.getPrecioEdificar();
+    boolean edificada=false;
     
-    if(hayEspacio && tengoSaldo){
+    if(puedoEdificarCasa(titulo)){
         titulo.edificarCasa();
         modificarSaldo(-costeEdificarCasa);
+        edificada=true;
     }
-    
-    boolean edificada=hayEspacio && tengoSaldo;
-    
     return edificada;
 }
 boolean edificarHotel(TituloPropiedad titulo){
     boolean edificada=false;
-    int numHoteles=titulo.getNumHoteles();
-    if(numHoteles<4){
-        int costeEdificarHotel=titulo.getPrecioEdificar();
-        boolean tengoSaldo=tengoSaldo(costeEdificarHotel);
-        if(tengoSaldo){
+    int costeEdificarHotel=titulo.getPrecioEdificar();
+    if(puedoEdificarHotel(titulo)){
             titulo.edificarHotel();
             modificarSaldo(-costeEdificarHotel);
             edificada=true;
-        }
     }
+    
     return edificada;
 }
 
 void eliminarDeMisPropiedades(TituloPropiedad titulo){
     propiedades.remove(titulo);
     titulo.setPropietario(null);
+    int precioVenta=titulo.calcularPrecioVenta();
+    modificarSaldo(precioVenta);
 }
 
 
@@ -211,7 +212,7 @@ void pagarAlquiler(){
     modificarSaldo(-costeAlquiler);
 
 }
-void pagarImpuesto(){
+protected void pagarImpuesto(){
     
     saldo=saldo-casillaActual.getCoste();
 
@@ -252,7 +253,7 @@ boolean tengoCartaLibertad(){
     return resultado;
 }
 
-boolean tengoSaldo(int cantidad){
+protected boolean tengoSaldo(int cantidad){
 boolean tengo=false;
 if (saldo>cantidad)
         tengo=true;
@@ -263,10 +264,54 @@ return tengo;
 void venderPropiedad(Casilla casilla){
     TituloPropiedad titulo=casilla.getTitulo();
     eliminarDeMisPropiedades(titulo);
+    casilla.getTitulo().setPropietario(null);
     int precioVenta=titulo.calcularPrecioVenta();
     modificarSaldo(precioVenta);
-} 
+}
 
+    protected Especulador convertirme (int fianza){
+    Especulador convertido;
+    convertido=new Especulador(this,fianza);
+    return convertido;
+    }
+    
+    protected boolean deboIrCarcel(){
+        return !tengoCartaLibertad();
+    }
+    
+    protected boolean puedoEdificarCasa(TituloPropiedad titulo){
+    boolean hayEspacio=titulo.getNumCasas()<4;
+    boolean tengoSaldo=false;
+    int costeEdificarCasa=0;    
+    if(hayEspacio){
+        costeEdificarCasa=titulo.getPrecioEdificar();
+        tengoSaldo=tengoSaldo(costeEdificarCasa);
+    }
+    
+    if(hayEspacio && tengoSaldo){
+        titulo.edificarCasa();
+        modificarSaldo(-costeEdificarCasa);
+    }
+    
+    boolean edificada=hayEspacio && tengoSaldo;
+    
+    return edificada;
+    }
+    
+    protected boolean puedoEdificarHotel(TituloPropiedad titulo){
+    boolean edificada=false;
+    int numHoteles=titulo.getNumHoteles();
+    if(numHoteles<4){
+        int costeEdificarHotel=titulo.getPrecioEdificar();
+        boolean tengoSaldo=tengoSaldo(costeEdificarHotel);
+        if(tengoSaldo){
+            titulo.edificarHotel();
+            modificarSaldo(-costeEdificarHotel);
+            edificada=true;
+        }
+    }
+    return edificada;
+    }
 
     @Override
     public String toString() {

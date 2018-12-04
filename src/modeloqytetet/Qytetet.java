@@ -76,11 +76,17 @@ public class Qytetet {
             mazo.add(new Sorpresa ("Dijiste que invitarías a chupitos pero no lo hiciste, pagas 50 euros a cada uno",
                     50, TipoSorpresa.PORJUGADOR));
             
+            mazo.add(new Sorpresa ("¡Te conviertes en especulador!",
+                    5000, TipoSorpresa.CONVERTIRME));
+            
             mazo.add(new Sorpresa ("Recibes un sobre con la letra B escrita, recibes 500 euros",
                     500, TipoSorpresa.PAGARCOBRAR));
             
             mazo.add(new Sorpresa ("Te vas a la ruleta, crees ganar pero el ruso de al lado te hace la jugada, pierdes 200 euros",
                     200, TipoSorpresa.PAGARCOBRAR));
+            
+            mazo.add(new Sorpresa ("¡Te conviertes en especulador!",
+                    5000, TipoSorpresa.CONVERTIRME));
            
             mazo.add(new Sorpresa ("Gracias a la burbuja del alquiler, la gente compra más casas "
                     + "y hay más turistas en hoteles, ganas 300 euros.",
@@ -169,6 +175,9 @@ public void aplicarSorpresa(){
                     setEstadoJuego(EstadoJuego.ALGUNJUGADORENBANCARROTA);
                 }
                 break;
+            case CONVERTIRME:
+                    jugadorActual.convertirme(cartaActual.getValor());
+                break;
             case PORJUGADOR:
                 for(int i=0; i<MAX_JUGADORES-1; i++){
                     siguienteJugador();
@@ -188,7 +197,7 @@ public void aplicarSorpresa(){
 
 
 public boolean cancelarHipoteca(int numeroCasilla){
-    Casilla casilla=jugadorActual.getCasillaActual();
+    Casilla casilla=tablero.obtenerCasillaNumero(numeroCasilla);
     TituloPropiedad titulo=casilla.getTitulo();
     boolean puedeCancelar=jugadorActual.cancelarHipoteca(titulo);
     setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
@@ -243,7 +252,7 @@ private void encarcelarJugador(){
     Casilla casillaCarcel;
     Sorpresa carta;
     
-    if (!jugadorActual.tengoCartaLibertad()){
+    if (jugadorActual.deboIrCarcel()){
         casillaCarcel = tablero.getCarcel();
         jugadorActual.irACarcel(casillaCarcel);
         jugadorActual.setCasillaActual(casillaCarcel);
@@ -451,7 +460,7 @@ int tirarDado(){
 
 }
 void venderPropiedad(int numeroCasilla){
-    Casilla casilla=jugadorActual.getCasillaActual();
+    Casilla casilla=tablero.obtenerCasillaNumero(numeroCasilla);
     jugadorActual.venderPropiedad(casilla);
     setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
     
