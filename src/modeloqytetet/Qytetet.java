@@ -176,7 +176,7 @@ public void aplicarSorpresa(){
                 }
                 break;
             case CONVERTIRME:
-                    jugadorActual.convertirme(cartaActual.getValor());
+                    jugadorActual=jugadorActual.convertirme(cartaActual.getValor());
                 break;
             case PORJUGADOR:
                 for(int i=0; i<MAX_JUGADORES-1; i++){

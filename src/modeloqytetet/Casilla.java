@@ -17,6 +17,10 @@ public class Casilla {
     private void setTitulo(TituloPropiedad titulo) {
         this.titulo = titulo;
     }
+    
+    private void setCoste(int coste){
+        Coste=coste;
+    }
 
     @Override
     public String toString() {
@@ -38,23 +42,12 @@ public class Casilla {
         return Coste;
     }
 
-    TipoCasilla getTipo() {
+    protected TipoCasilla getTipo() {
         return tipo;
     }
 
-    TituloPropiedad getTitulo() {
+    protected TituloPropiedad getTitulo() {
         return titulo;
-    }
-
-    public Casilla(TipoCasilla tipo, int numeroCasilla) {
-        setNumeroCasilla(numeroCasilla);
-        
-        if(tipo!=TipoCasilla.CALLE)
-        {
-            setTipo(tipo);
-            setTitulo(titulo);
-            Coste=0;
-        }
     }
     
     public Casilla(TipoCasilla tipo,int numeroCasilla , TituloPropiedad titulo) {
@@ -64,38 +57,23 @@ public class Casilla {
             this.tipo = tipo;
             Coste = titulo.getPrecioCompra();
         }
+        else
+        {
+            this.tipo=tipo;
+            this.titulo=null;
+        }
     }
-    double pagarAlquiler(){
     
-        return titulo.calcularImporteAlquiler();
-    
-    }
     boolean propietarioEncarcelado(){
     
         return titulo.propietarioEncarcelado();
     
     }
-    boolean soyEdificable(){
-    boolean resultado = false;
+    boolean tengoPropietario(){
+        boolean resultado = false;
     if (tipo == TipoCasilla.CALLE)
         resultado = true;
     
     return resultado;
     }
-    
-    boolean tengoPropietario(){
-    return titulo.tengoPropietario();
-    }
-    
-    TituloPropiedad asignarPropietario(Jugador jugador){
-        if (!titulo.tengoPropietario())
-            titulo.setPropietario(jugador);
-        
-        return titulo;
-    }
-   
-    
-    
-    
-    
 }
