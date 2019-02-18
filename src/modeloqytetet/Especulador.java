@@ -1,72 +1,68 @@
 package modeloqytetet;
+
 public class Especulador extends Jugador {
     private int fianza;
-
     
-    protected Especulador(Jugador jugador,int fianza){
+    protected Especulador(Jugador jugador, int fianza) {
         super(jugador);
-        this.fianza=fianza;
+        this.fianza = fianza;
     }
     
-    
+    @Override
     protected void pagarImpuesto(){
-        super.modificarSaldo(super.getCasillaActual().getCoste()/2);
+        modificarSaldo(-(getCasillaActual().getCoste()/2));
     }
- 
+    
+    @Override
+    protected boolean deboIrACarcel(){
+        boolean resultado = false;
+        
+        if(super.deboIrACarcel() && !pagarFianza()){
+            resultado = true;
+        }
+        
+        return resultado;
+    }
+    
+    @Override
     protected Especulador convertirme(int fianza){
         return this;
     }
     
-    protected boolean deboIrACarcel(){
-        return super.deboIrCarcel() && !pagarFianza();
+    private boolean pagarFianza(){
+        boolean puedePagar = false;
+        
+        if(getSaldo() > this.fianza){
+            modificarSaldo(-(this.fianza));
+            puedePagar = true;
+        }
+        
+        return puedePagar;
     }
     
-    private boolean pagarFianza(){
-        return super.getSaldo()>fianza; 
+    @Override
+    protected boolean puedoEdificarCasa(TituloPropiedad titulo){
+        boolean hayEspacio = titulo.getNumCasas() < 8;
+        boolean tengoSaldo = false;
+        
+        if(hayEspacio){
+            int costeEdificarCasa = titulo.getPrecioEdificar();
+            tengoSaldo = tengoSaldo(costeEdificarCasa);
+        }
+        
+        return hayEspacio && tengoSaldo;
+    }
+    
+    @Override
+    protected boolean puedoEdificarHotel(TituloPropiedad titulo){
+        int numHoteles = titulo.getNumHoteles();
+        boolean tengoSaldo = tengoSaldo(titulo.getPrecioEdificar());
+        
+        return numHoteles < 8 && tengoSaldo;
     }
 
     @Override
     public String toString() {
-        return super.toString()+"Especulador{" + "fianza=" + fianza + '}';
-    }
-    
-    protected boolean puedoEdificarCasa(TituloPropiedad titulo){
-    boolean hayEspacio=titulo.getNumCasas()<8;
-    boolean tengoSaldo=false;
-    int costeEdificarCasa=0;    
-    if(hayEspacio){
-        costeEdificarCasa=titulo.getPrecioEdificar();
-        tengoSaldo=super.tengoSaldo(costeEdificarCasa);
-    }
-    
-    if(hayEspacio && tengoSaldo){
-        titulo.edificarCasa();
-        super.modificarSaldo(-costeEdificarCasa);
-    }
-    
-    boolean edificada=hayEspacio && tengoSaldo;
-    
-    return edificada;    
-    }
-    
-    protected boolean puedoEdificarHotel(TituloPropiedad titulo){
-    boolean hayEspacio=titulo.getNumHoteles()<8;
-    boolean tengoSaldo=false;
-    int costeEdificarHotel=0;
-    int numHoteles=titulo.getNumHoteles();
-    if(hayEspacio){
-        costeEdificarHotel=titulo.getPrecioEdificar();
-        tengoSaldo=super.tengoSaldo(costeEdificarHotel);
-    }
-    if(hayEspacio && tengoSaldo){
-            titulo.edificarHotel();
-            super.modificarSaldo(-costeEdificarHotel);
-        }
-    
-    boolean edificada=hayEspacio && tengoSaldo;
-    
-    return edificada;
-    
-    }
-    
+        return super.toString() + " Especulador{" + "fianza=" + fianza + '}';
+    }   
 }

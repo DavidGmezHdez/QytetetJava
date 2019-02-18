@@ -1,4 +1,3 @@
-
 package modeloqytetet;
 
 public class TituloPropiedad {
@@ -9,12 +8,13 @@ public class TituloPropiedad {
     private int hipotecaBase;
     private int precioEdificar;
     private boolean hipotecada;
-    private int numHoteles=0;
-    private int numCasas=0;
+    private int numHoteles;
+    private int numCasas;
+    
     private Jugador propietario;
     
     
-    public TituloPropiedad(String nombre,int precioC,int alquilerB,float factorR,int hipotecaB,int precioE)
+    TituloPropiedad(String nombre, int precioC, int alquilerB, float factorR, int hipotecaB, int precioE)
     {
         Nombre=nombre;
         precioCompra=precioC;
@@ -27,13 +27,52 @@ public class TituloPropiedad {
         numCasas=0;
                        
     }
+    
+    int calcularCosteCancelar(){
+        int costeCancelar = 0;
+        
+        costeCancelar = (int) (calcularCosteHipotecar() + calcularCosteHipotecar()*0.1);
+        
+        return costeCancelar;
+    }
+    
+    int calcularCosteHipotecar(){
+        int costeHipoteca = 0;
+        
+        costeHipoteca = (int) (this.hipotecaBase + this.numCasas*0.5*this.hipotecaBase + this.numHoteles*this.hipotecaBase);
+        
+        return costeHipoteca;
+    }
+    
+    int calcularImporteAlquiler(){
+        int costeAlquiler;
+            
+        costeAlquiler = (int) (this.alquilerBase + this.numHoteles*0.5 + this.numCasas*2);
+        
+        return costeAlquiler;
+    }
+    
+    int calcularPrecioVenta(){
+        int precioVenta;
+        
+        precioVenta = (int) (precioCompra + (numCasas + numHoteles) * precioEdificar * factorRevalorizacion);
+        
+        return precioVenta;
+    }
+    
+    boolean cancelarHipoteca(){
+        this.hipotecada = false;
+        
+        return true;
+    }
 
-    @Override
-    public String toString() {
-        return "TituloPropiedad{" + "Nombre=" + Nombre + ", precioCompra=" + precioCompra + ", alquilerBase=" + alquilerBase 
-                + ", factorRevalorizacion=" + factorRevalorizacion + ", hipotecaBase=" + hipotecaBase 
-                + ", precioEdificar=" + precioEdificar + ", hipotecada=" + hipotecada 
-                + ", numHoteles=" + numHoteles + ", numCasas=" + numCasas + '}';
+    void edificarCasa(){
+        this.numCasas++;
+    }
+    
+    void edificarHotel(){
+        this.numHoteles++;
+        this.numCasas -= 4;
     }
 
     void setHipotecada(boolean hipotecada) {
@@ -72,99 +111,48 @@ public class TituloPropiedad {
         return numHoteles;
     }
 
-   int getNumCasas() {
+    int getNumCasas() {
         return numCasas;
     }
- 
-    int calcularCosteCancelar(){
-        int costeCancelar=0;
-        costeCancelar= (int) (calcularCosteHipotecar()+calcularCosteHipotecar()*0.1);
-        return costeCancelar;
-    }
-    int calcularCosteHipotecar(){
-    int costeHipoteca=0;
-    costeHipoteca = (int) (hipotecaBase+numCasas*0.5*hipotecaBase+numHoteles*hipotecaBase);
-    return costeHipoteca;
-    }
-    double calcularImporteAlquiler(){
-        double costeAlquiler=0;
-            
-        costeAlquiler = alquilerBase + numHoteles*0.5 + numCasas*2;
-        
-        propietario.modificarSaldo(costeAlquiler);
-        
-        return costeAlquiler;
     
-    }
-    int calcularPrecioVenta(){
-        int costeVenta=0;
-        costeVenta=(int) (precioCompra+(numCasas+numHoteles)*precioEdificar*factorRevalorizacion);
-        return costeVenta;
+    Jugador getPropietario(){
+        return this.propietario;
     }
     
-    
-    boolean cancelarHipoteca(){
-    
-    hipotecada=false;
-    
-    return true;
-    
-    }
-    void cobrarAlquiler(int coste){
-    
-    throw new UnsupportedOperationException("Sin implementar");
-    
-    }
-    void edificarCasa(){
-    
-        numCasas++;
-    
-    }
-    void edificarHotel(){
-    
-        numHoteles++;
-    
-    }
-
     int hipotecar(){
-        int costeHipoteca=calcularCosteHipotecar();
-        setHipotecada(true);
+        int costeHipoteca = calcularCosteHipotecar();
+        this.setHipotecada(true);
         
         return costeHipoteca;
-    
-    
     }
+    
     int pagarAlquiler(){
-    int costeAlquiler = (int) calcularImporteAlquiler();
-    propietario.modificarSaldo(costeAlquiler);
+        int costeAlquiler = (int) calcularImporteAlquiler();
+        this.propietario.modificarSaldo(costeAlquiler);
         
-    return costeAlquiler;
+        return costeAlquiler;
     }
+    
     boolean propietarioEncarcelado(){
-    boolean resultado=false;
-    if (propietario.getEncarcelado())
-        resultado=true;
-    
-    return resultado;
-    
-    
+        return propietario.getEncarcelado();
     }
-
+    
     void setPropietario(Jugador propietario){
-    
-        this.propietario=propietario;
-    
+        this.propietario = propietario;
     }
     
-
-    boolean tengoPropietario(){
-    return propietario != null;
+    boolean tienePropietario(){
+        return propietario != null;
     }
 
-    Jugador getPropietario(){
-       return propietario;
+    @Override
+    public String toString() {
+        if(!tienePropietario()){
+            return "TituloPropiedad{" + "Nombre=" + Nombre + ", precioCompra=" + precioCompra + ", alquilerBase=" + alquilerBase + ", factorRevalorizacion=" + factorRevalorizacion + ", hipotecaBase=" + hipotecaBase + ", precioEdificar=" + precioEdificar + ", hipotecada=" + hipotecada + ", numHoteles=" + numHoteles + ", numCasas=" + numCasas + '}';
+        }
+        
+        else{
+            return "TituloPropiedad{" + "Nombre=" + Nombre + ", precioCompra=" + precioCompra + ", alquilerBase=" + alquilerBase + ", factorRevalorizacion=" + factorRevalorizacion + ", hipotecaBase=" + hipotecaBase + ", precioEdificar=" + precioEdificar + ", hipotecada=" + hipotecada + ", numHoteles=" + numHoteles + ", numCasas=" + numCasas + ", propietario=" + propietario.getNombre() + '}';
+        }
     }
-    
-    
-
 }

@@ -1,20 +1,29 @@
 package modeloqytetet;
-public class OtraCasilla extends Casilla {
-    public OtraCasilla(TipoCasilla tipo, int numeroCasilla) {
-        super(tipo, numeroCasilla,null);
+
+public class OtraCasilla extends Casilla{
+    private TipoCasilla tipo;
+    
+    OtraCasilla(TipoCasilla tipo, int numCasilla){
+        super(numCasilla);
+        this.tipo = tipo;;
     }
     
-    @Override
     protected TipoCasilla getTipo(){
-        return super.getTipo();
+        return this.tipo;
     }
     
-    protected boolean soyEdificable(){
-        return false;
-    }
-   
     @Override
     protected TituloPropiedad getTitulo(){
         return null;
-    }   
+    }
+    
+    @Override
+    protected boolean soyEdificable(){
+        return false;
+    }
+    
+    @Override
+    public String toString() {
+        return super.toString() + " OtraCasilla{" + "tipo=" + tipo + '}';
+    }
 }

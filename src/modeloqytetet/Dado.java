@@ -1,36 +1,33 @@
-
 package modeloqytetet;
 import java.util.Random;
-public class Dado {
 
+class Dado {
+    private static final Dado instance = new Dado();
     private int valor;
-    private static final Dado instance=new Dado();
-   
+    
     private Dado(){
-    valor=0;
+        valor = 0;
     }
-   
+    
+    public static Dado getInstance(){
+        return instance;
+    }
     
     int tirar(){
-    
-        Random r = new Random();
-        int valorDado = r.nextInt(6)+1;
-        valor=valorDado;
-        return valorDado;
+        Random rand = new Random();
+        
+        int obtenido = rand.nextInt(6) + 1;
+        this.valor = obtenido;
+        
+        return obtenido;
     }
-public int getValor(){
-
-    return valor;
-
-}
-public static Dado getDado() {
-    return instance;
-}
+    
+    public int getValor(){
+        return valor;
+    }
 
     @Override
     public String toString() {
         return "Dado{" + "valor=" + valor + '}';
     }
-
-
 }

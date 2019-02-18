@@ -1,7 +1,4 @@
-
 package modeloqytetet;
-
 public enum MetodoSalirCarcel {
-    TIRANDODADO,PAGANDOLIBERTAD
-    
+    TIRANDODADO, PAGANDOLIBERTAD;
 }
